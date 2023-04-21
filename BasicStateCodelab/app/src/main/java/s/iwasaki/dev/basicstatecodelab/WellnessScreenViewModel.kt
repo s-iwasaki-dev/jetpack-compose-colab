@@ -10,6 +10,9 @@ class WellnessScreenViewModel : ViewModel() {
     var viewState by mutableStateOf(WellnessScreenState.initialState)
         private set
 
+    // FIXME この設計だとイベントを常にViewModelに一度流す必要があり、Viewレイヤーで完結させられるものについて冗長な実装になる可能性がある
+    // FIXME イベントの委譲をViewレイヤーで制御できるようにするには、ViewModelの各メソッドをpublicにしてViewから任意に呼び出せるようにしておく
+    // FIXME この実装だとViewの実装からイベント処理を委譲しているViewModelのメソッドにジャンプできないのが不便
     val listener = WellnessScreenState.Listener(
         waterCounterListener = WaterCounterState.Listener(
             onIncrement = { this.onIncrement() }
@@ -29,6 +32,7 @@ class WellnessScreenViewModel : ViewModel() {
     }
 
     private fun onIncrement() {
+        // FIXME ViewStateインスタンスを作り直すとすべてのComposableの再コンポーズが走ってしまってそう
         viewState = viewState.copy(
             waterCounterState = viewState.waterCounterState.copy(
                 count = viewState.waterCounterState.count + 1

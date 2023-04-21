@@ -2,6 +2,7 @@
 import android.os.Parcelable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.parcelize.Parcelize
@@ -13,6 +14,8 @@ fun WellnessScreen(
     viewModel: WellnessScreenViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
+    SideEffect { println("[TEST] compose WellnessScreen") }
+
     Column(modifier = modifier) {
         WaterCounter(
             state = viewModel.viewState.waterCounterState,

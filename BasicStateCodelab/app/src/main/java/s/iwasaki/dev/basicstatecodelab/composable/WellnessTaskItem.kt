@@ -9,6 +9,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -20,6 +21,8 @@ fun WellnessTaskItem(
     listener: WellnessTaskItemState.Listener,
     modifier: Modifier = Modifier
 ) {
+    SideEffect { println("[TEST] compose WellnessTaskItem") }
+
     Row(
         modifier = modifier, verticalAlignment = Alignment.CenterVertically
     ) {
