@@ -3,6 +3,8 @@ import android.os.Parcelable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.parcelize.Parcelize
@@ -16,16 +18,22 @@ fun WellnessScreen(
 ) {
     SideEffect { println("[TEST] compose WellnessScreen") }
 
+    val viewState by viewModel.viewState.collectAsState()
     Column(modifier = modifier) {
         WaterCounter(
-            state = viewModel.viewState.waterCounterState,
-            listener = viewModel.listener.waterCounterListener,
+            state = viewState.waterCounterState,
+            listener = WaterCounterState.Listener(
+                onIncrement = { viewModel.onIncrement() }
+            ),
             modifier = modifier
         )
 
         WellnessTasksList(
-            state = viewModel.viewState.wellnessTasksListState,
-            listener = viewModel.listener.wellnessTasksListListener,
+            state = viewState.wellnessTasksListState,
+            listener = WellnessTasksListState.Listener(
+                onCloseTask = { id -> viewModel.onCloseTask(id) },
+                onCheckedTask = { id, checked -> viewModel.onCheckedTask(id, checked) }
+            ),
             modifier = modifier
         )
     }
