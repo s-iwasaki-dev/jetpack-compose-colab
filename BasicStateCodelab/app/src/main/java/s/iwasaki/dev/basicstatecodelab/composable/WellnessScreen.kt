@@ -8,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.parcelize.Parcelize
+import s.iwasaki.dev.basicstatecodelab.WellnessScreenViewModel
 import s.iwasaki.dev.basicstatecodelab.composable.WaterCounter
 import s.iwasaki.dev.basicstatecodelab.composable.WaterCounterState
 
@@ -19,26 +20,30 @@ fun WellnessScreen(
     SideEffect { println("[TEST] compose WellnessScreen") }
 
     val viewState by viewModel.viewState.collectAsState()
+    val listener = WellnessScreenState.Listener(
+        waterCounterListener = WaterCounterState.Listener(
+            onIncrement = { viewModel.onIncrement() }
+        ),
+        wellnessTasksListListener = WellnessTasksListState.Listener(
+            onCloseTask = { id -> viewModel.onCloseTask(id) },
+            onCheckedTask = { id, checked -> viewModel.onCheckedTask(id, checked) }
+        )
+    )
+
     Column(modifier = modifier) {
         WaterCounter(
             state = viewState.waterCounterState,
-            listener = WaterCounterState.Listener(
-                onIncrement = { viewModel.onIncrement() }
-            ),
+            listener = listener.waterCounterListener,
             modifier = modifier
         )
 
         WellnessTasksList(
             state = viewState.wellnessTasksListState,
-            listener = WellnessTasksListState.Listener(
-                onCloseTask = { id -> viewModel.onCloseTask(id) },
-                onCheckedTask = { id, checked -> viewModel.onCheckedTask(id, checked) }
-            ),
+            listener = listener.wellnessTasksListListener,
             modifier = modifier
         )
     }
 }
-
 
 @Parcelize
 data class WellnessScreenState(
