@@ -32,7 +32,7 @@ class WellnessScreenViewModel : ViewModel() {
     }
 
     private fun onIncrement() {
-        // FIXME ViewStateインスタンスを作り直すとすべてのComposableの再コンポーズが走ってしまってそう
+        // FIXME ViewStateインスタンスを作り直すとすべてのComposableの再コンポーズが走ってしまってそう（ログ的には走っちゃってる）
         viewState = viewState.copy(
             waterCounterState = viewState.waterCounterState.copy(
                 count = viewState.waterCounterState.count + 1

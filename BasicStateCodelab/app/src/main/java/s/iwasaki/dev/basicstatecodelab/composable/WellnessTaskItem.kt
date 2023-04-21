@@ -21,7 +21,7 @@ fun WellnessTaskItem(
     listener: WellnessTaskItemState.Listener,
     modifier: Modifier = Modifier
 ) {
-    SideEffect { println("[TEST] compose WellnessTaskItem") }
+    SideEffect { println("[TEST] compose WellnessTaskItem : ${state.id}") }
 
     Row(
         modifier = modifier, verticalAlignment = Alignment.CenterVertically
