@@ -1,6 +1,7 @@
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
+package s.iwasaki.dev.basicstatecodelab.domain
+
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
 class WellnessTask(
