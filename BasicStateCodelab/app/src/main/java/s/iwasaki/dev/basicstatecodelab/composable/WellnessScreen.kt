@@ -1,25 +1,20 @@
+package s.iwasaki.dev.basicstatecodelab.composable
 
-import android.os.Parcelable
+import WellnessTasksList
+import WellnessTasksListState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import kotlinx.parcelize.Parcelize
 import s.iwasaki.dev.basicstatecodelab.WellnessScreenViewModel
-import s.iwasaki.dev.basicstatecodelab.composable.WaterCounter
-import s.iwasaki.dev.basicstatecodelab.composable.WaterCounterState
 
 @Composable
 fun WellnessScreen(
     viewModel: WellnessScreenViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
-    SideEffect { println("[TEST] compose WellnessScreen") }
-
-    val viewState by viewModel.viewState.collectAsState()
     val listener = WellnessScreenState.Listener(
         waterCounterListener = WaterCounterState.Listener(
             onIncrement = { viewModel.onIncrement() }
@@ -30,26 +25,37 @@ fun WellnessScreen(
         )
     )
 
+    WellnessScreen(viewModel.viewState, listener, modifier)
+}
+
+@Composable
+fun WellnessScreen(
+    state: WellnessScreenState,
+    listener: WellnessScreenState.Listener,
+    modifier: Modifier
+) {
+    SideEffect { println("[TEST] compose WellnessScreen") }
+
     Column(modifier = modifier) {
         WaterCounter(
-            state = viewState.waterCounterState,
+            state = state.waterCounterState,
             listener = listener.waterCounterListener,
             modifier = modifier
         )
 
         WellnessTasksList(
-            state = viewState.wellnessTasksListState,
+            state = state.wellnessTasksListState,
             listener = listener.wellnessTasksListListener,
             modifier = modifier
         )
     }
 }
 
-@Parcelize
+@Stable
 data class WellnessScreenState(
     val waterCounterState: WaterCounterState,
     val wellnessTasksListState: WellnessTasksListState
-) : Parcelable {
+) {
     data class Listener(
         val waterCounterListener: WaterCounterState.Listener,
         val wellnessTasksListListener: WellnessTasksListState.Listener

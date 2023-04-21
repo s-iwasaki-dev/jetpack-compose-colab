@@ -7,6 +7,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.parcelize.Parcelize
@@ -26,10 +27,10 @@ fun WaterCounter(state: WaterCounterState, listener: WaterCounterState.Listener,
     }
 }
 
-@Parcelize
+@Stable
 data class WaterCounterState(
     val count: Int
-) : Parcelable {
+) {
     data class Listener(
         val onIncrement: () -> Unit
     )

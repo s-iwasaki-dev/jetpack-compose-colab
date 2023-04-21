@@ -4,6 +4,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import kotlinx.parcelize.Parcelize
 
@@ -31,10 +32,10 @@ fun WellnessTasksList(
     }
 }
 
-@Parcelize
+@Stable
 data class WellnessTasksListState(
     val list: List<WellnessTaskItemState>
-) : Parcelable {
+) {
     data class Listener(
         val onCheckedTask: (Int, Boolean) -> Unit,
         val onCloseTask: (Int) -> Unit

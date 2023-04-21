@@ -10,6 +10,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -34,20 +35,20 @@ fun WellnessTaskItem(
         )
         Checkbox(
             checked = state.checked,
-            onCheckedChange = listener.onCheckedChange
+            onCheckedChange = { listener.onCheckedChange(it) }
         )
-        IconButton(onClick = listener.onClose) {
+        IconButton(onClick = { listener.onClose() }) {
             Icon(Icons.Filled.Close, contentDescription = "Close")
         }
     }
 }
 
-@Parcelize
+@Stable
 data class WellnessTaskItemState(
     val id: Int,
     val taskName: String,
     val checked: Boolean,
-) : Parcelable {
+) {
     data class Listener(
         val onCheckedChange: (Boolean) -> Unit,
         val onClose: () -> Unit,
