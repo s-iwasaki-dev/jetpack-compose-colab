@@ -10,24 +10,19 @@ import s.iwasaki.dev.basicstatecodelab.composable.WaterCounterState
 
 @Composable
 fun WellnessScreen(
-    viewModel: WellnessViewModel = viewModel(),
+    viewModel: WellnessScreenViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
         WaterCounter(
             state = viewModel.viewState.waterCounterState,
-            listener = WaterCounterState.Listener { viewModel.onIncrement() },
+            listener = viewModel.listener.waterCounterListener,
             modifier = modifier
         )
 
         WellnessTasksList(
             state = viewModel.viewState.wellnessTasksListState,
-            listener = WellnessTasksListState.Listener(
-                onCheckedTask = { task, checked ->
-                    viewModel.onCheckedTask(task, checked)
-                },
-                onCloseTask = { task -> viewModel.onCloseTask(task) }
-            ),
+            listener = viewModel.listener.wellnessTasksListListener,
             modifier = modifier
         )
     }
