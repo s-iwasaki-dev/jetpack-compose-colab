@@ -4,8 +4,8 @@ import WellnessTasksList
 import WellnessTasksListState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import s.iwasaki.dev.basicstatecodelab.WellnessScreenViewModel
@@ -15,15 +15,17 @@ fun WellnessScreen(
     viewModel: WellnessScreenViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
-    val listener = WellnessScreenState.Listener(
-        waterCounterListener = WaterCounterState.Listener(
-            onIncrement = { viewModel.onIncrement() }
-        ),
-        wellnessTasksListListener = WellnessTasksListState.Listener(
-            onCloseTask = { id -> viewModel.onCloseTask(id) },
-            onCheckedTask = { id, checked -> viewModel.onCheckedTask(id, checked) }
+    val listener = remember {
+        WellnessScreenState.Listener(
+            waterCounterListener = WaterCounterState.Listener(
+                onIncrement = { viewModel.onIncrement() }
+            ),
+            wellnessTasksListListener = WellnessTasksListState.Listener(
+                onCloseTask = { id -> viewModel.onCloseTask(id) },
+                onCheckedTask = { id, checked -> viewModel.onCheckedTask(id, checked) }
+            )
         )
-    )
+    }
 
     WellnessScreen(viewModel.viewState, listener, modifier)
 }
@@ -51,7 +53,6 @@ fun WellnessScreen(
     }
 }
 
-@Immutable
 data class WellnessScreenState(
     val waterCounterState: WaterCounterState,
     val wellnessTasksListState: WellnessTasksListState

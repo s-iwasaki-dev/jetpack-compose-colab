@@ -8,7 +8,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,12 +40,12 @@ fun WellnessTaskItem(
     }
 }
 
-@Immutable
 data class WellnessTaskItemState(
     val id: Int,
     val taskName: String,
     val checked: Boolean,
 ) {
+
     data class Listener(
         val onCheckedChange: (Boolean) -> Unit,
         val onClose: () -> Unit,
