@@ -8,6 +8,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -25,6 +26,8 @@ fun GameLayout(
     onKeyboardDone: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    SideEffect { println("[TEST] compose GameLayout") }
+
     Column(
         verticalArrangement = Arrangement.spacedBy(24.dp),
 

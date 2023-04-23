@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -16,6 +17,8 @@ import com.example.android.unscramble.R
 
 @Composable
 fun GameStatus(wordCount: Int, score: Int, modifier: Modifier = Modifier) {
+    SideEffect { println("[TEST] compose GameStatus") }
+
     Row(
         modifier = modifier
             .fillMaxWidth()

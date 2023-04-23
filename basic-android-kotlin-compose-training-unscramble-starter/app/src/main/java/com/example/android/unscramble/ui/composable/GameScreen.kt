@@ -26,6 +26,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -43,6 +44,8 @@ fun GameScreen(
     modifier: Modifier = Modifier,
     gameViewModel: GameViewModel = viewModel()
 ) {
+    SideEffect { println("[TEST] compose GameScreen") }
+
     val gameUiState by gameViewModel.uiState.collectAsState()
     Column(
         modifier = modifier
