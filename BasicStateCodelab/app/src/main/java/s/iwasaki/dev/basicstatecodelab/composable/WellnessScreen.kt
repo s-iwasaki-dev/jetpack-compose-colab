@@ -4,8 +4,8 @@ import WellnessTasksList
 import WellnessTasksListState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import s.iwasaki.dev.basicstatecodelab.WellnessScreenViewModel
@@ -51,7 +51,7 @@ fun WellnessScreen(
     }
 }
 
-@Stable
+@Immutable
 data class WellnessScreenState(
     val waterCounterState: WaterCounterState,
     val wellnessTasksListState: WellnessTasksListState

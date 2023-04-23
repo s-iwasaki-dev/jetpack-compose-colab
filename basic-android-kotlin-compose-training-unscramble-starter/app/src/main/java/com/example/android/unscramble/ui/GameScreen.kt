@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.unscramble.ui.composable
+package com.example.android.unscramble.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -36,6 +36,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.android.unscramble.R
 import com.example.android.unscramble.ui.GameViewModel
+import com.example.android.unscramble.ui.composable.FinalScoreDialog
+import com.example.android.unscramble.ui.composable.FinalScoreDialogComposable
+import com.example.android.unscramble.ui.composable.GameLayout
+import com.example.android.unscramble.ui.composable.GameLayoutComposable
+import com.example.android.unscramble.ui.composable.GameStatus
 import com.example.android.unscramble.ui.theme.UnscrambleTheme
 
 
@@ -55,15 +60,14 @@ fun GameScreen(
     ) {
 
         GameStatus(
-            wordCount = gameUiState.currentWordCount,
-            score = gameUiState.score
+            state = gameUiState.gameStatusState
         )
         GameLayout(
-            currentScrambledWord = gameUiState.currentScrambledWord,
-            userGuess = gameUiState.userGuess,
-            onUserGuessChanged = { gameViewModel.updateUserGuess(it) },
-            onKeyboardDone = { gameViewModel.checkUserGuess() },
-            isGuessWrong = gameUiState.isGuessedWordWrong
+            state = gameUiState.gameLayoutState,
+            listener = GameLayoutComposable.Listener(
+                onUserGuessChanged = { gameViewModel.updateUserGuess(it) },
+                onKeyboardDone = { gameViewModel.checkUserGuess() },
+            )
         )
         Row(
             modifier = modifier
@@ -92,8 +96,10 @@ fun GameScreen(
         }
         if (gameUiState.isGameOver) {
             FinalScoreDialog(
-                score = gameUiState.score,
-                onPlayAgain = { gameViewModel.resetGame() }
+                state = gameUiState.finalScoreDialogState,
+                listener = FinalScoreDialogComposable.Listener(
+                    onPlayAgain = { gameViewModel.resetGame() }
+                )
             )
         }
     }

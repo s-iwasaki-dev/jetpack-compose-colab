@@ -13,8 +13,8 @@ import com.example.android.unscramble.R
 
 @Composable
 fun FinalScoreDialog(
-    score: Int,
-    onPlayAgain: () -> Unit,
+    state: FinalScoreDialogComposable.State,
+    listener: FinalScoreDialogComposable.Listener,
     modifier: Modifier = Modifier
 ) {
     SideEffect { println("[TEST] compose FinalScoreDialog") }
@@ -28,7 +28,7 @@ fun FinalScoreDialog(
             // onCloseRequest.
         },
         title = { Text(stringResource(R.string.congratulations)) },
-        text = { Text(stringResource(R.string.you_scored, score)) },
+        text = { Text(stringResource(R.string.you_scored, state.score)) },
         modifier = modifier,
         dismissButton = {
             TextButton(
@@ -41,10 +41,26 @@ fun FinalScoreDialog(
         },
         confirmButton = {
             TextButton(
-                onClick = onPlayAgain
+                onClick = listener.onPlayAgain
             ) {
                 Text(text = stringResource(R.string.play_again))
             }
         }
+    )
+}
+
+class FinalScoreDialogComposable {
+    data class State(
+        val score: Int,
+    ) {
+        companion object {
+            val initialState = State(
+                score = 0
+            )
+        }
+    }
+
+    data class Listener(
+        val onPlayAgain: () -> Unit,
     )
 }

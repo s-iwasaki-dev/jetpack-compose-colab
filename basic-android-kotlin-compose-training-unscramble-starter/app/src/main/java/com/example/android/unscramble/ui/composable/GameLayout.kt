@@ -19,11 +19,8 @@ import com.example.android.unscramble.R
 
 @Composable
 fun GameLayout(
-    currentScrambledWord: String,
-    isGuessWrong: Boolean,
-    userGuess: String,
-    onUserGuessChanged: (String) -> Unit,
-    onKeyboardDone: () -> Unit,
+    state: GameLayoutComposable.State,
+    listener: GameLayoutComposable.Listener,
     modifier: Modifier = Modifier
 ) {
     SideEffect { println("[TEST] compose GameLayout") }
@@ -33,7 +30,7 @@ fun GameLayout(
 
         ) {
         Text(
-            text = currentScrambledWord,
+            text = state.currentScrambledWord,
             fontSize = 45.sp,
             modifier = modifier.align(Alignment.CenterHorizontally)
         )
@@ -43,24 +40,45 @@ fun GameLayout(
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
         OutlinedTextField(
-            value = userGuess,
+            value = state.userGuess,
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
-            onValueChange = onUserGuessChanged,
+            onValueChange = listener.onUserGuessChanged,
             label = {
-                if (isGuessWrong) {
+                if (state.isGuessWrong) {
                     Text(stringResource(R.string.wrong_guess))
                 } else {
                     Text(stringResource(R.string.enter_your_word))
                 }
             },
-            isError = isGuessWrong,
+            isError = state.isGuessWrong,
             keyboardOptions = KeyboardOptions.Default.copy(
                 imeAction = ImeAction.Done
             ),
             keyboardActions = KeyboardActions(
-                onDone = { onKeyboardDone() }
+                onDone = { listener.onKeyboardDone() }
             ),
         )
     }
+}
+
+class GameLayoutComposable {
+    data class State(
+        val currentScrambledWord: String,
+        val isGuessWrong: Boolean,
+        val userGuess: String,
+    ) {
+        companion object {
+            val initialState = State(
+                currentScrambledWord = "",
+                isGuessWrong = false,
+                userGuess = "",
+            )
+        }
+    }
+
+    data class Listener(
+        val onUserGuessChanged: (String) -> Unit,
+        val onKeyboardDone: () -> Unit,
+    )
 }
