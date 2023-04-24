@@ -15,6 +15,7 @@ fun WellnessScreen(
     viewModel: WellnessScreenViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
+    // FIXME Listenerインスタンスの再コンポーズへの影響を意識しないといけないのは微妙
     val listener = remember {
         WellnessScreenState.Listener(
             waterCounterListener = WaterCounterState.Listener(
