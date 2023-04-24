@@ -8,7 +8,8 @@ import androidx.compose.ui.Modifier
 @Composable
 fun WellnessTasksList(
     state: WellnessTasksListState,
-    listener: WellnessTasksListState.Listener,
+    onCheckedTask: (Int, Boolean) -> Unit,
+    onCloseTask: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     SideEffect { println("[TEST] compose WellnessTasksList") }
@@ -20,10 +21,8 @@ fun WellnessTasksList(
         ) { task ->
             WellnessTaskItem(
                 state = task,
-                listener = WellnessTaskItemState.Listener(
-                    onCheckedChange = { checked -> listener.onCheckedTask(task.id, checked) },
-                    onClose = { listener.onCloseTask(task.id) }
-                )
+                onCheckedChange = { checked -> onCheckedTask(task.id, checked) },
+                onClose = { onCloseTask(task.id) }
             )
         }
     }
@@ -32,12 +31,6 @@ fun WellnessTasksList(
 data class WellnessTasksListState(
     val list: List<WellnessTaskItemState>
 ) {
-
-    data class Listener(
-        val onCheckedTask: (Int, Boolean) -> Unit,
-        val onCloseTask: (Int) -> Unit
-    )
-
     companion object {
         val initialState = WellnessTasksListState(
             list = emptyList()

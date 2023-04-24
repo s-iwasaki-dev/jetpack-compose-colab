@@ -16,7 +16,8 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun WellnessTaskItem(
     state: WellnessTaskItemState,
-    listener: WellnessTaskItemState.Listener,
+    onCheckedChange: (Boolean) -> Unit,
+    onClose: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     SideEffect { println("[TEST] compose WellnessTaskItem : ${state.id}") }
@@ -32,9 +33,9 @@ fun WellnessTaskItem(
         )
         Checkbox(
             checked = state.checked,
-            onCheckedChange = { listener.onCheckedChange(it) }
+            onCheckedChange = onCheckedChange
         )
-        IconButton(onClick = { listener.onClose() }) {
+        IconButton(onClick = onClose) {
             Icon(Icons.Filled.Close, contentDescription = "Close")
         }
     }
@@ -45,12 +46,6 @@ data class WellnessTaskItemState(
     val taskName: String,
     val checked: Boolean,
 ) {
-
-    data class Listener(
-        val onCheckedChange: (Boolean) -> Unit,
-        val onClose: () -> Unit,
-    )
-
     companion object {
         val initialState = WellnessTaskItemState(
             id = -1,

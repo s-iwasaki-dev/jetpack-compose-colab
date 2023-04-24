@@ -11,14 +11,14 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun WaterCounter(state: WaterCounterState, listener: WaterCounterState.Listener, modifier: Modifier = Modifier) {
+fun WaterCounter(state: WaterCounterState, onIncrement: () -> Unit, modifier: Modifier = Modifier) {
     SideEffect { println("[TEST] compose WaterCounter") }
 
     Column(modifier = modifier.padding(16.dp)) {
         if (state.count > 0) {
             Text("You've had ${state.count} glasses.")
         }
-        Button(onClick = listener.onIncrement, Modifier.padding(top = 8.dp), enabled = state.count < 10) {
+        Button(onClick = onIncrement, Modifier.padding(top = 8.dp), enabled = state.count < 10) {
             Text("Add one")
         }
     }
@@ -27,11 +27,6 @@ fun WaterCounter(state: WaterCounterState, listener: WaterCounterState.Listener,
 data class WaterCounterState(
     val count: Int
 ) {
-
-    data class Listener(
-        val onIncrement: () -> Unit
-    )
-
     companion object {
         val initialState = WaterCounterState(
             count = 0
