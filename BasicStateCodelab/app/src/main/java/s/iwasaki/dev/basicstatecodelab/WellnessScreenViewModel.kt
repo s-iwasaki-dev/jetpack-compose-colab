@@ -1,22 +1,24 @@
 package s.iwasaki.dev.basicstatecodelab
 
-import WellnessTaskItemState
 import WellnessTasksListState
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import s.iwasaki.dev.basicstatecodelab.composable.WellnessScreenState
-import s.iwasaki.dev.basicstatecodelab.domain.WellnessTask
+import s.iwasaki.dev.basicstatecodelab.domain.WellnessTaskRepository
 
-class WellnessScreenViewModel : ViewModel() {
+class WellnessScreenViewModel(
+    val wellnessTaskRepository: WellnessTaskRepository = WellnessTaskRepository()
+) : ViewModel() {
     var viewState by mutableStateOf(WellnessScreenState.initialState)
         private set
 
     init {
         viewState = viewState.copy(
             wellnessTasksListState = WellnessTasksListState(
-                list = getWellnessTasks()
+                list = wellnessTaskRepository.getWellnessTasks()
             )
         )
     }
@@ -47,8 +49,4 @@ class WellnessScreenViewModel : ViewModel() {
             )
         )
     }
-}
-
-private fun getWellnessTasks() = List(30) { i -> WellnessTask(i, "Task # $i") }.map {
-    WellnessTaskItemState(id = it.id, taskName = it.label, checked = it.checked)
 }
