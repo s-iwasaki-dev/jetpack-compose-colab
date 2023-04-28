@@ -2,7 +2,6 @@ package s.iwasaki.dev.basicstatecodelab
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -19,17 +18,16 @@ fun WellnessApp(
             route = "initialScreen"
         ) {
             WellnessScreen(
-                payload = WellnessScreenPayload("initial screen"),
-                onNavigate = { navController.navigate("screenA?payload=${it.parseToString()}") }
+                onNavigate = { navController.navigate("screenA?args=${it.parseToString()}") }
             )
         }
 
         composable(
-            route = "screenA?payload={payload}",
-            arguments = listOf(navArgument("payload") { type = NavType.StringType; nullable = true })
+            route = "screenA?args={args}",
+            arguments = listOf(navArgument("args") { nullable = true })
         ) { backStackEntry ->
             WellnessScreen(
-                payload = backStackEntry.arguments?.getString("payload")?.parseToPayload(),
+                args = backStackEntry.arguments?.getString("args")?.parseToPayload(),
                 onNavigate = { navController.navigate("initialScreen") }
             )
         }
