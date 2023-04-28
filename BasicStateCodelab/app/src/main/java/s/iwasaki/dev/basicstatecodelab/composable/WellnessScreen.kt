@@ -16,13 +16,16 @@ import s.iwasaki.dev.basicstatecodelab.WellnessScreenViewModel
 @Composable
 fun WellnessScreen(
     payload: WellnessScreenPayload?,
-    onNavigate: () -> Unit,
+    onNavigate: (payload: WellnessScreenPayload?) -> Unit,
     viewModel: WellnessScreenViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
     WellnessScreen(
         screenName = payload?.screenName ?: "no name screen",
-        onNavigate = onNavigate,
+        onNavigate = {
+            // FIXME Payloadの生成はViewModelで行い消費型イベントで通知する
+            onNavigate(payload?.let { null } ?: WellnessScreenPayload("non initial screen"))
+        },
         state = viewModel.viewState,
         onIncrement = { viewModel.onIncrement() },
         onCloseTask = { id -> viewModel.onCloseTask(id) },
