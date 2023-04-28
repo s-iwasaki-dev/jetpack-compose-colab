@@ -13,45 +13,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import s.iwasaki.dev.basicstatecodelab.WellnessScreenViewModel
 
 @Composable
-fun WellnessScreenA(
+fun WellnessScreen(
+    screenName: String,
     onNavigate: () -> Unit,
     viewModel: WellnessScreenViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
     WellnessScreen(
-        screenName = "WellnessScreenA",
-        onNavigate = onNavigate,
-        state = viewModel.viewState,
-        onIncrement = { viewModel.onIncrement() },
-        onCloseTask = { id -> viewModel.onCloseTask(id) },
-        onCheckedTask = { id, checked -> viewModel.onCheckedTask(id, checked) },
-        modifier = modifier
-    )
-}
-@Composable
-fun WellnessScreenB(
-    onNavigate: () -> Unit,
-    viewModel: WellnessScreenViewModel = viewModel(),
-    modifier: Modifier = Modifier
-) {
-    WellnessScreen(
-        screenName = "WellnessScreenB",
-        onNavigate = onNavigate,
-        state = viewModel.viewState,
-        onIncrement = { viewModel.onIncrement() },
-        onCloseTask = { id -> viewModel.onCloseTask(id) },
-        onCheckedTask = { id, checked -> viewModel.onCheckedTask(id, checked) },
-        modifier = modifier
-    )
-}
-@Composable
-fun WellnessScreenC(
-    onNavigate: () -> Unit,
-    viewModel: WellnessScreenViewModel = viewModel(),
-    modifier: Modifier = Modifier
-) {
-    WellnessScreen(
-        screenName = "WellnessScreenC",
+        screenName = screenName,
         onNavigate = onNavigate,
         state = viewModel.viewState,
         onIncrement = { viewModel.onIncrement() },
