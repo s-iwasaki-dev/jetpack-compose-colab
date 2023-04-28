@@ -10,17 +10,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import s.iwasaki.dev.basicstatecodelab.WellnessScreenPayload
 import s.iwasaki.dev.basicstatecodelab.WellnessScreenViewModel
 
 @Composable
 fun WellnessScreen(
-    screenName: String,
+    payload: WellnessScreenPayload?,
     onNavigate: () -> Unit,
     viewModel: WellnessScreenViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
     WellnessScreen(
-        screenName = screenName,
+        screenName = payload?.screenName ?: "no name screen",
         onNavigate = onNavigate,
         state = viewModel.viewState,
         onIncrement = { viewModel.onIncrement() },
