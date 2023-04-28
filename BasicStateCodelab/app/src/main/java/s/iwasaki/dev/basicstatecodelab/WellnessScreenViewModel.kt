@@ -1,7 +1,6 @@
 package s.iwasaki.dev.basicstatecodelab
 
 import WellnessTasksListState
-import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -10,7 +9,7 @@ import s.iwasaki.dev.basicstatecodelab.composable.WellnessScreenState
 import s.iwasaki.dev.basicstatecodelab.domain.WellnessTaskRepository
 
 class WellnessScreenViewModel(
-    val wellnessTaskRepository: WellnessTaskRepository = WellnessTaskRepository()
+    wellnessTaskRepository: WellnessTaskRepository = WellnessTaskRepository()
 ) : ViewModel() {
     var viewState by mutableStateOf(WellnessScreenState.initialState)
         private set

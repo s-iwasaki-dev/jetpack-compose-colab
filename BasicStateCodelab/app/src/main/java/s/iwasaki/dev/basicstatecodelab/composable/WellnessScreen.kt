@@ -3,6 +3,9 @@ package s.iwasaki.dev.basicstatecodelab.composable
 import WellnessTasksList
 import WellnessTasksListState
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
@@ -10,11 +13,46 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import s.iwasaki.dev.basicstatecodelab.WellnessScreenViewModel
 
 @Composable
-fun WellnessScreen(
+fun WellnessScreenA(
+    onNavigate: () -> Unit,
     viewModel: WellnessScreenViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
     WellnessScreen(
+        screenName = "WellnessScreenA",
+        onNavigate = onNavigate,
+        state = viewModel.viewState,
+        onIncrement = { viewModel.onIncrement() },
+        onCloseTask = { id -> viewModel.onCloseTask(id) },
+        onCheckedTask = { id, checked -> viewModel.onCheckedTask(id, checked) },
+        modifier = modifier
+    )
+}
+@Composable
+fun WellnessScreenB(
+    onNavigate: () -> Unit,
+    viewModel: WellnessScreenViewModel = viewModel(),
+    modifier: Modifier = Modifier
+) {
+    WellnessScreen(
+        screenName = "WellnessScreenB",
+        onNavigate = onNavigate,
+        state = viewModel.viewState,
+        onIncrement = { viewModel.onIncrement() },
+        onCloseTask = { id -> viewModel.onCloseTask(id) },
+        onCheckedTask = { id, checked -> viewModel.onCheckedTask(id, checked) },
+        modifier = modifier
+    )
+}
+@Composable
+fun WellnessScreenC(
+    onNavigate: () -> Unit,
+    viewModel: WellnessScreenViewModel = viewModel(),
+    modifier: Modifier = Modifier
+) {
+    WellnessScreen(
+        screenName = "WellnessScreenC",
+        onNavigate = onNavigate,
         state = viewModel.viewState,
         onIncrement = { viewModel.onIncrement() },
         onCloseTask = { id -> viewModel.onCloseTask(id) },
@@ -25,6 +63,8 @@ fun WellnessScreen(
 
 @Composable
 fun WellnessScreen(
+    screenName: String,
+    onNavigate: () -> Unit,
     state: WellnessScreenState,
     onIncrement: () -> Unit,
     onCloseTask: (Int) -> Unit,
@@ -34,6 +74,13 @@ fun WellnessScreen(
     SideEffect { println("[TEST] compose WellnessScreen") }
 
     Column(modifier = modifier) {
+        Row {
+            Text(text = screenName)
+            Button(onClick = onNavigate) {
+                Text(text = "navigate")
+            }
+        }
+
         WaterCounter(
             state = state.waterCounterState,
             onIncrement = onIncrement,
